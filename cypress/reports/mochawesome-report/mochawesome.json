@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-13T00:16:10.700Z",
+    "end": "2025-06-13T00:16:23.550Z",
+    "duration": 12850,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "facb7cd2-94b4-425a-b444-c376477e84e7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\executionFlow.cy.js",
+      "file": "cypress\\e2e\\executionFlow.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "ab1748bd-20c7-4490-83d1-5290b7367b04",
+          "title": "Automation Task Full Flow",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "TC01 - Search for product and verify search results",
+              "fullTitle": "Automation Task Full Flow TC01 - Search for product and verify search results",
+              "timedOut": null,
+              "duration": 7564,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_HomePage.default.visit();\n_HomePage.default.verifyHomePageVisible();\n_HomePage.default.clickProductsButton();\n_ProductsPage.default.verifyAllProductsPage();\n_ProductsPage.default.searchProduct(testData.productName);\n_ProductsPage.default.verifySearchedProductsVisible();\n_ProductsPage.default.verifySearchResultsContain(testData.productName);",
+              "err": {},
+              "uuid": "3becd63d-c58d-4517-bb6a-41d7a31a10d5",
+              "parentUUID": "ab1748bd-20c7-4490-83d1-5290b7367b04",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC02 - Add product to cart and verify quantity",
+              "fullTitle": "Automation Task Full Flow TC02 - Add product to cart and verify quantity",
+              "timedOut": null,
+              "duration": 5201,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_HomePage.default.visit();\n_HomePage.default.verifyHomePageVisible();\n_HomePage.default.clickFirstProductView();\n_ProductDetailsPage.default.verifyProductDetailsVisible();\n_ProductDetailsPage.default.setQuantity(testData.quantity);\n_ProductDetailsPage.default.clickAddToCart();\n_ProductDetailsPage.default.clickViewCart();\n_CartPage.default.verifyProductQuantity(testData.quantity);",
+              "err": {},
+              "uuid": "4433c63d-a749-462d-991d-0fe5cde80c20",
+              "parentUUID": "ab1748bd-20c7-4490-83d1-5290b7367b04",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "3becd63d-c58d-4517-bb6a-41d7a31a10d5",
+            "4433c63d-a749-462d-991d-0fe5cde80c20"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 12765,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/mochawesome-report",
+        "overwrite": true,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
