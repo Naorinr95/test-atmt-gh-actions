@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        browser: [chrome, firefox, electron]
+        browser: [chrome, firefox, electron, edge]
 
     name: Run on ${{ matrix.browser }}
 
@@ -29,36 +29,9 @@ jobs:
       - name: Verify Cypress installation
         run: npx cypress verify
 
-      - name: Run Cypress test (executionFlow on ${{ matrix.browser }})
+      - name: Run Cypress test on ${{ matrix.browser }}
         id: cypress
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browser }}
-          config-file: cypress.config.js
-          spec: cypress/e2e/executionFlow.cy.js
-          record: true
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-      - name: Generate Mochawesome HTML report
-        if: always()
-        run: |
-          mkdir -p cypress/reports/html
-          npx mochawesome-merge cypress/reports/mochawesome-report/*.json > cypress/reports/mochawesome-${{ matrix.browser }}.json
-          npx marge cypress/reports/mochawesome-${{ matrix.browser }}.json --reportDir cypress/reports/html --reportFilename report-${{ matrix.browser }}
-
-      - name: Upload Mochawesome report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mochawesome-report-${{ matrix.browser }}
-          path: cypress/reports/html
-
-      - name: Upload Cypress screenshots and videos (on failure)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-media-${{ matrix.browser }}
-          path: |
-            cypress/screenshots
-            cypress/videos
+          config-file: cypress.c
