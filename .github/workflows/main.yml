@@ -1,10 +1,16 @@
-name: Cypress Tests with Mochawesome
+name: Cypress Tests with Mochawesome (Multi-Browser)
 
 on: [push, pull_request]
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        browser: [chrome, firefox, electron]
+
+    name: Run on ${{ matrix.browser }}
 
     steps:
       - name: Checkout repository
@@ -16,18 +22,20 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install mochawesome mochawesome-merge mochawesome-report-generator --save-dev
 
       - name: Verify Cypress installation
         run: npx cypress verify
 
-      - name: Run Cypress test (executionFlow)
+      - name: Run Cypress test (executionFlow on ${{ matrix.browser }})
         id: cypress
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome
+          browser: ${{ matrix.browser }}
           config-file: cypress.config.js
-          spec: cypress/e2e/executionFlow.cy.js  # Updated to your test file
+          spec: cypress/e2e/executionFlow.cy.js
           record: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -36,21 +44,21 @@ jobs:
         if: always()
         run: |
           mkdir -p cypress/reports/html
-          npx mochawesome-merge cypress/reports/mochawesome-report/*.json > cypress/reports/mochawesome.json
-          npx marge cypress/reports/mochawesome.json --reportDir cypress/reports/html
+          npx mochawesome-merge cypress/reports/mochawesome-report/*.json > cypress/reports/mochawesome-${{ matrix.browser }}.json
+          npx marge cypress/reports/mochawesome-${{ matrix.browser }}.json --reportDir cypress/reports/html --reportFilename report-${{ matrix.browser }}
 
       - name: Upload Mochawesome report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mochawesome-report
+          name: mochawesome-report-${{ matrix.browser }}
           path: cypress/reports/html
 
       - name: Upload Cypress screenshots and videos (on failure)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-media
+          name: cypress-media-${{ matrix.browser }}
           path: |
             cypress/screenshots
             cypress/videos
