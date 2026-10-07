@@ -33,7 +33,6 @@ jobs:
           install-command: npm ci
           browser: ${{ matrix.browser }}
           config-file: cypress.config.js
-          spec: cypress/e2e/executionFlow.cy.js
 
       - name: Generate Mochawesome HTML report
         if: always()
