@@ -92,8 +92,7 @@ Open the **Actions** tab, choose a run, and download the `mochawesome-report-<br
 ## Notes
 
 - The site under test is a public practice application. No real accounts or data are used.
-- Planned next steps: login and signup tests, a negative login case, and a checkout flow.
-
+- Possible extensions: login and signup flows, and a checkout flow.
 ## Author
 
 **Rifat Naorin**, Software QA Engineer
