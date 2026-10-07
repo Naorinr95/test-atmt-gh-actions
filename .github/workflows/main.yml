@@ -1,12 +1,17 @@
 name: Cypress Tests with Mochawesome (Multi-Browser)
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         browser: [chrome, firefox, edge, electron]
 
@@ -17,44 +22,35 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
 
-      - name: Install dependencies
-        run: |
-          npm install
-          npm install mochawesome mochawesome-merge mochawesome-report-generator --save-dev
-
-      - name: Verify Cypress installation
-        run: npx cypress verify
-
-      - name: Run Cypress test (executionFlow on ${{ matrix.browser }})
-        id: cypress
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
+          install-command: npm ci
           browser: ${{ matrix.browser }}
           config-file: cypress.config.js
           spec: cypress/e2e/executionFlow.cy.js
-          record: true
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
       - name: Generate Mochawesome HTML report
         if: always()
         run: |
           mkdir -p cypress/reports/html
-          npx mochawesome-merge cypress/reports/mochawesome-report/*.json > cypress/reports/mochawesome-${{ matrix.browser }}.json
-          npx marge cypress/reports/mochawesome-${{ matrix.browser }}.json --reportDir cypress/reports/html --reportFilename report-${{ matrix.browser }}
+          npx mochawesome-merge "cypress/reports/mochawesome-report/*.json" > cypress/reports/merged-${{ matrix.browser }}.json
+          npx marge cypress/reports/merged-${{ matrix.browser }}.json --reportDir cypress/reports/html --reportFilename report-${{ matrix.browser }}
 
       - name: Upload Mochawesome report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mochawesome-report-${{ matrix.browser }} 
+          name: mochawesome-report-${{ matrix.browser }}
           path: cypress/reports/html
+          if-no-files-found: warn
 
-      - name: Upload Cypress screenshots and videos (on failure)
+      - name: Upload screenshots and videos (on failure)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -62,3 +58,4 @@ jobs:
           path: |
             cypress/screenshots
             cypress/videos
+          if-no-files-found: ignore

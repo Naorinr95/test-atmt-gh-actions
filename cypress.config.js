@@ -11,12 +11,10 @@ module.exports = defineConfig({
   },
   e2e: {
     baseUrl: 'https://automationexercise.com',
+    blockHosts: ['*googlesyndication.com', '*doubleclick.net', '*googleadservices.com'],
     retries: {
       runMode: 2,
       openMode: 1,
-    },
-    setupNodeEvents(on, config) {
-      // implement node event listeners here if needed
     },
   },
 });

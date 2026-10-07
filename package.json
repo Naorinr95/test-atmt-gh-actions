@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "posttest": "mochawesome-merge cypress/reports/mochawesome-report/*.json > cypress/reports/mochawesome.json && marge cypress/reports/mochawesome.json -f report -o cypress/reports/html"
-  },
+  "test": "cypress run",
+  "cy:open": "cypress open",
+  "posttest": "mochawesome-merge cypress/reports/mochawesome-report/*.json > cypress/reports/mochawesome.json && marge cypress/reports/mochawesome.json -f report -o cypress/reports/html"
+},
   "author": "",
   "license": "ISC",
   "description": "",

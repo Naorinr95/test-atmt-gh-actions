@@ -1,10 +1,11 @@
 class HomePage {
   visit() {
-    cy.visit('https://automationexercise.com');
+    cy.visit('/');
   }
 
   verifyHomePageVisible() {
-    cy.get('body').should('be.visible').and('contain.text', 'Home');
+    cy.url().should('eq', Cypress.config('baseUrl') + '/');
+    cy.get('#slider').should('be.visible');
   }
 
   clickProductsButton() {
