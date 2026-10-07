@@ -2,9 +2,7 @@
 
 End-to-end UI tests for the demo e-commerce site [automationexercise.com](https://automationexercise.com), built with **Cypress** using the **Page Object Model**, with **Mochawesome** HTML reports and a **GitHub Actions** pipeline that runs on four browsers.
 
-<!-- After the first successful run, add the badge below:
 ![Cypress Tests](https://github.com/Naorinr95/test-atmt-gh-actions/actions/workflows/main.yml/badge.svg)
--->
 
 ## What is tested
 
