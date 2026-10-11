@@ -1,6 +1,6 @@
 # Automation Exercise: Cypress E2E Tests
 
-End-to-end UI and API tests for the demo e-commerce site [automationexercise.com](https://automationexercise.com), built with **Cypress** using the **Page Object Model**, with **Mochawesome** HTML reports and a **GitHub Actions** pipeline that runs on four browsers.
+End-to-end UI tests for the demo e-commerce site [automationexercise.com](https://automationexercise.com), built with **Cypress** using the **Page Object Model**, with **Mochawesome** HTML reports and a **GitHub Actions** pipeline that runs on four browsers.
 
 ![Cypress Tests](https://github.com/Naorinr95/test-atmt-gh-actions/actions/workflows/main.yml/badge.svg)
 
@@ -10,12 +10,6 @@ End-to-end UI and API tests for the demo e-commerce site [automationexercise.com
 |----|----------|
 | TC01 | Open the Products page, search for a product, and verify every result matches the search term |
 | TC02 | Open a product, set the quantity, add it to the cart, and verify the quantity in the cart |
-| API01 | GET productsList returns a non-empty product list with the expected fields |
-| API02 | POST to productsList is rejected with 405 |
-| API03 | GET brandsList returns brands |
-| API04 | POST searchProduct returns matching products |
-| API05 | POST searchProduct without a term returns 400 |
-| API06 | POST verifyLogin with an unknown user returns 404 |
 
 UI test data (product name, quantity) is kept in `cypress/fixtures/product.json`, separate from the test code.
 
@@ -23,7 +17,6 @@ UI test data (product name, quantity) is kept in `cypress/fixtures/product.json`
 
 - Cypress 14, JavaScript, Node.js 22
 - Page Object Model (`HomePage`, `ProductsPage`, `ProductDetailsPage`, `CartPage`)
-- API testing with `cy.request()`
 - Fixtures for test data
 - Mochawesome (JSON reports merged into one HTML report)
 - GitHub Actions matrix: Chrome, Firefox, Edge, Electron
@@ -71,7 +64,7 @@ cypress/reports/html/report.html
 
 ```
 .github/workflows/main.yml   CI pipeline (4-browser matrix, report upload)
-cypress/e2e/                 Test specs (executionFlow.cy.js, api.cy.js)
+cypress/e2e/                 Test spec (executionFlow.cy.js)
 cypress/pages/               Page objects
 cypress/fixtures/            Test data (product.json)
 cypress/support/             Commands and global setup
@@ -92,7 +85,7 @@ Open the **Actions** tab, choose a run, and download the `mochawesome-report-<br
 ## Notes
 
 - The site under test is a public practice application. No real accounts or data are used.
-- Possible extensions: login and signup flows, and a checkout flow.
+- Possible extensions: API tests, login and signup flows, and a checkout flow.
 ## Author
 
 **Rifat Naorin**, Software QA Engineer
